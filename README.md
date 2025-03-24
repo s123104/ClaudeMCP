@@ -410,7 +410,7 @@ chmod +x launch_claude.sh
 1. **克隆專案**
 
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/s123104/ClaudeMCP
    cd ClaudeMCP
    ```
 
@@ -490,8 +490,6 @@ chmod +x launch_claude.sh
 - Claude Desktop + `.env` 機密管理
 - MCP 伺服器：`github`、`postgres`、`puppeteer`、`sqlite`、`filesystem`、`git`、`memory`、`brave-search`、`everything`
 - Docker Compose 隔離部署（`npx` 模式）
-
-這份教學已達「Claude MCP 工程師專業等級」，可直接作為 GitHub README 或部落格文章發布！如需進一步優化（例如轉換工具、CLI 自動化、TLS 串接），隨時告訴我！啾啾 🐰❤️
 
 ---
 

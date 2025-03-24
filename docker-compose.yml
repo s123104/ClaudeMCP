@@ -1,0 +1,98 @@
+services:
+  filesystem:
+    image: claude-mcp-fs
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mcp-filesystem
+    volumes:
+      - ${FILESYSTEM_PATH}:/sandbox
+    environment:
+      - FILESYSTEM_PATH=${FILESYSTEM_PATH}
+    ports:
+      - "${FILESYSTEM_PORT}:4000"
+
+  sqlite:
+    image: claude-mcp-sqlite
+    build:
+      context: .
+      dockerfile: sqlite.Dockerfile
+    container_name: mcp-sqlite
+    volumes:
+      - ${SQLITE_PATH}:/app
+    environment:
+      - SQLITE_PATH=${SQLITE_PATH}
+    ports:
+      - "${SQLITE_PORT}:4000"
+
+  git:
+    image: claude-mcp-git
+    build:
+      context: .
+      dockerfile: git.Dockerfile
+    container_name: mcp-git
+    volumes:
+      - ${GIT_PATH}:/repo
+    environment:
+      - GIT_PATH=${GIT_PATH}
+    ports:
+      - "${GIT_PORT}:4000"
+
+  postgres:
+    image: postgres:15
+    container_name: mcp-postgres
+    environment:
+      - POSTGRES_DB=mydb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    ports:
+      - "${POSTGRES_PORT}:5432"
+
+  memory:
+    image: claude-mcp-memory
+    build:
+      context: .
+      dockerfile: memory.Dockerfile
+    container_name: mcp-memory
+    ports:
+      - "${MEMORY_PORT}:4000"
+
+  brave-search:
+    image: claude-mcp-brave-search
+    build:
+      context: .
+      dockerfile: brave-search.Dockerfile
+    container_name: mcp-brave-search
+    environment:
+      - BRAVE_API_KEY=${BRAVE_API_KEY}
+    ports:
+      - "${BRAVE_PORT}:4000"
+
+  everything:
+    image: claude-mcp-everything
+    build:
+      context: .
+      dockerfile: everything.Dockerfile
+    container_name: mcp-everything
+    ports:
+      - "${EVERYTHING_PORT}:4000"
+
+  puppeteer:
+    image: claude-mcp-puppeteer
+    build:
+      context: .
+      dockerfile: puppeteer.Dockerfile
+    container_name: mcp-puppeteer
+    ports:
+      - "${PUPPETEER_PORT}:4000"
+
+  github:
+    image: claude-mcp-github
+    build:
+      context: .
+      dockerfile: github.Dockerfile
+    container_name: mcp-github
+    environment:
+      - GITHUB_API_KEY=${GITHUB_API_KEY}
+    ports:
+      - "${GITHUB_PORT}:4000"

@@ -1,0 +1,25 @@
+# 環境變數檔案（包含敏感資料）
+.env
+
+# 本地資料目錄（運行時生成）
+data/
+data/sqlite/
+data/git/
+
+# Docker 相關
+*.log
+docker-compose.logs
+
+# 編輯器或系統生成的臨時檔案
+*.swp
+*~
+.DS_Store
+Thumbs.db
+
+# Node.js 相關（若有本地安裝）
+node_modules/
+npm-debug.log
+
+# 其他可能的臨時檔案
+*.bak
+*.tmp

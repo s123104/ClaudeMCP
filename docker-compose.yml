@@ -3,7 +3,7 @@ services:
     image: claude-mcp-fs
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: filesystem.Dockerfile
     container_name: mcp-filesystem
     volumes:
       - ${FILESYSTEM_PATH}:/sandbox
@@ -11,6 +11,7 @@ services:
       - FILESYSTEM_PATH=${FILESYSTEM_PATH}
     ports:
       - "${FILESYSTEM_PORT}:4000"
+    restart: unless-stopped
 
   sqlite:
     image: claude-mcp-sqlite
@@ -24,6 +25,7 @@ services:
       - SQLITE_PATH=${SQLITE_PATH}
     ports:
       - "${SQLITE_PORT}:4000"
+    restart: unless-stopped
 
   git:
     image: claude-mcp-git
@@ -37,9 +39,13 @@ services:
       - GIT_PATH=${GIT_PATH}
     ports:
       - "${GIT_PORT}:4000"
+    restart: unless-stopped
 
   postgres:
-    image: postgres:15
+    image: claude-mcp-postgres
+    build:
+      context: .
+      dockerfile: postgres.Dockerfile
     container_name: mcp-postgres
     environment:
       - POSTGRES_DB=mydb
@@ -47,6 +53,7 @@ services:
       - POSTGRES_PASSWORD=password
     ports:
       - "${POSTGRES_PORT}:5432"
+    restart: unless-stopped
 
   memory:
     image: claude-mcp-memory
@@ -56,6 +63,7 @@ services:
     container_name: mcp-memory
     ports:
       - "${MEMORY_PORT}:4000"
+    restart: unless-stopped
 
   brave-search:
     image: claude-mcp-brave-search
@@ -67,6 +75,7 @@ services:
       - BRAVE_API_KEY=${BRAVE_API_KEY}
     ports:
       - "${BRAVE_PORT}:4000"
+    restart: unless-stopped
 
   everything:
     image: claude-mcp-everything
@@ -76,6 +85,7 @@ services:
     container_name: mcp-everything
     ports:
       - "${EVERYTHING_PORT}:4000"
+    restart: unless-stopped
 
   puppeteer:
     image: claude-mcp-puppeteer
@@ -85,6 +95,7 @@ services:
     container_name: mcp-puppeteer
     ports:
       - "${PUPPETEER_PORT}:4000"
+    restart: unless-stopped
 
   github:
     image: claude-mcp-github
@@ -96,3 +107,37 @@ services:
       - GITHUB_API_KEY=${GITHUB_API_KEY}
     ports:
       - "${GITHUB_PORT}:4000"
+    restart: unless-stopped
+
+  sequential-thinking:
+    image: claude-mcp-sequential-thinking
+    build:
+      context: .
+      dockerfile: sequential-thinking.Dockerfile
+    container_name: mcp-sequential-thinking
+    ports:
+      - "${SEQUENTIAL_THINKING_PORT}:4000"
+    restart: unless-stopped
+
+  gitlab:
+    image: claude-mcp-gitlab
+    build:
+      context: .
+      dockerfile: gitlab.Dockerfile
+    container_name: mcp-gitlab
+    environment:
+      - GITLAB_PERSONAL_ACCESS_TOKEN=${GITLAB_PERSONAL_ACCESS_TOKEN}
+      - GITLAB_API_URL=https://gitlab.com/api/v4
+    ports:
+      - "${GITLAB_PORT}:4000"
+    restart: unless-stopped
+
+  time:
+    image: claude-mcp-time
+    build:
+      context: .
+      dockerfile: time.Dockerfile
+    container_name: mcp-time
+    ports:
+      - "${TIME_PORT}:4000"
+    restart: unless-stopped

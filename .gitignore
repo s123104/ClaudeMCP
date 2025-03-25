@@ -9,6 +9,8 @@ data/git/
 # Docker 相關
 *.log
 docker-compose.logs
+Dockerfile.*
+.dockerignore
 
 # 編輯器或系統生成的臨時檔案
 *.swp
@@ -19,7 +21,82 @@ Thumbs.db
 # Node.js 相關（若有本地安裝）
 node_modules/
 npm-debug.log
+package-lock.json
+yarn.lock
 
 # 其他可能的臨時檔案
 *.bak
 *.tmp
+
+# Claude Desktop 配置（若本地測試）
+claude_desktop_config.local.json
+
+# Claude Code 相關（若本地生成）
+.claude/
+
+# 測試與構建產物
+dist/
+build/
+*.tgz
+
+# 常用編輯器與 IDE 配置
+.vscode/           # VS Code 配置
+.idea/             # IntelliJ IDEA 配置
+*.sublime-*        # Sublime Text 配置
+*.code-workspace   # VS Code 工作區檔案
+
+# Python 相關（若涉及本地開發，如 time MCP）
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+venv/
+.virtualenv/
+.env/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# 測試相關
+coverage/
+*.coverage
+.coverage.*
+.cache/
+pytest_cache/
+*.xml
+*.junit
+
+# CI/CD 配置與產物
+.github/           # GitHub Actions 配置
+.gitlab-ci.yml     # GitLab CI/CD 配置
+.circleci/         # CircleCI 配置
+.travis.yml        # Travis CI 配置
+*.retry            # 重試記錄（某些 CI 工具生成）
+
+# 日誌與調試檔案
+*.log.*
+debug.log
+error.log
+trace.log
+
+# 系統快取與備份
+*.bak.*
+*.cache
+*.orig
+
+# 壓縮檔案與臨時下載
+*.zip
+*.tar.gz
+*.rar
+*.7z
+*.dmg
+*.iso
+
+# 本地資料庫測試檔案
+*.db
+*.sqlite3
+*.sql
+*.dump
+
+# TypeScript 相關
+*.tsbuildinfo

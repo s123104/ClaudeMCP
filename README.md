@@ -139,6 +139,7 @@ services:
       - FILESYSTEM_PATH=${FILESYSTEM_PATH}
     ports:
       - "${FILESYSTEM_PORT}:4000"
+    restart: unless-stopped
 
   sqlite:
     image: claude-mcp-sqlite
@@ -152,6 +153,7 @@ services:
       - SQLITE_PATH=${SQLITE_PATH}
     ports:
       - "${SQLITE_PORT}:4000"
+    restart: unless-stopped
 
   git:
     image: claude-mcp-git
@@ -165,6 +167,7 @@ services:
       - GIT_PATH=${GIT_PATH}
     ports:
       - "${GIT_PORT}:4000"
+    restart: unless-stopped
 
   postgres:
     image: claude-mcp-postgres
@@ -178,6 +181,7 @@ services:
       - POSTGRES_PASSWORD=password
     ports:
       - "${POSTGRES_PORT}:5432"
+    restart: unless-stopped
 
   memory:
     image: claude-mcp-memory
@@ -187,6 +191,7 @@ services:
     container_name: mcp-memory
     ports:
       - "${MEMORY_PORT}:4000"
+    restart: unless-stopped
 
   brave-search:
     image: claude-mcp-brave-search
@@ -198,6 +203,7 @@ services:
       - BRAVE_API_KEY=${BRAVE_API_KEY}
     ports:
       - "${BRAVE_PORT}:4000"
+    restart: unless-stopped
 
   everything:
     image: claude-mcp-everything
@@ -207,6 +213,7 @@ services:
     container_name: mcp-everything
     ports:
       - "${EVERYTHING_PORT}:4000"
+    restart: unless-stopped
 
   puppeteer:
     image: claude-mcp-puppeteer
@@ -216,6 +223,7 @@ services:
     container_name: mcp-puppeteer
     ports:
       - "${PUPPETEER_PORT}:4000"
+    restart: unless-stopped
 
   github:
     image: claude-mcp-github
@@ -227,6 +235,7 @@ services:
       - GITHUB_API_KEY=${GITHUB_API_KEY}
     ports:
       - "${GITHUB_PORT}:4000"
+    restart: unless-stopped
 
   sequential-thinking:
     image: claude-mcp-sequential-thinking
@@ -236,6 +245,7 @@ services:
     container_name: mcp-sequential-thinking
     ports:
       - "${SEQUENTIAL_THINKING_PORT}:4000"
+    restart: unless-stopped
 
   gitlab:
     image: claude-mcp-gitlab
@@ -248,6 +258,7 @@ services:
       - GITLAB_API_URL=https://gitlab.com/api/v4
     ports:
       - "${GITLAB_PORT}:4000"
+    restart: unless-stopped
 
   time:
     image: claude-mcp-time
@@ -257,6 +268,7 @@ services:
     container_name: mcp-time
     ports:
       - "${TIME_PORT}:4000"
+    restart: unless-stopped
 ```
 
 > **注意**：容器內端口統一設為 `4000`（`postgres` 除外），假設 MCP 伺服器監聽此端口。若不同，需調整對應 `Dockerfile`。
@@ -580,13 +592,6 @@ chmod +x launch_claude.sh
     "gitlab": {
       "url": "http://localhost:${GITLAB_PORT}"
     }
-    ```
-
-- **自動重啟**：
-
-  - 在 `docker-compose.yml` 中添加：
-    ```yaml
-    restart: unless-stopped
     ```
 
 - **Cloudflare Proxy**：

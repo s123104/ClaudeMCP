@@ -583,6 +583,13 @@ chmod +x launch_claude.sh
 
 ---
 
+## 🔐 2025-06 安全升級
+
+### 🗂️ User-Namespace + Fine-Grain ACL (PR #2)
+1. 透過 `scripts/enable-userns.sh` 一鍵啟用 `userns-remap`，容器內 root 對映宿主 UID 65xxx。
+2. 內建 `acl-guard.sh` 強制檢查 `ALLOWED_PATHS`，避免誤寫入宿主檔案系統。
+3. 只需 `./data/allowed` 目錄具有寫入權，其餘皆唯讀，符合資料最小暴露原則。
+
 ## 🚀 進階功能
 
 - **HTTP 代理模式**：

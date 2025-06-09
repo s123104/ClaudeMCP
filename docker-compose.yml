@@ -6,7 +6,11 @@ services:
       dockerfile: filesystem.Dockerfile
     container_name: mcp-filesystem
     volumes:
-      - ${FILESYSTEM_PATH}:/sandbox
+      - type: bind
+        source: ./data/allowed
+        target: /workspace
+        bind:
+          propagation: rprivate
     environment:
       - FILESYSTEM_PATH=${FILESYSTEM_PATH}
     ports:
@@ -20,7 +24,11 @@ services:
       dockerfile: sqlite.Dockerfile
     container_name: mcp-sqlite
     volumes:
-      - ${SQLITE_PATH}:/app
+      - type: bind
+        source: ./data/allowed
+        target: /workspace
+        bind:
+          propagation: rprivate
     environment:
       - SQLITE_PATH=${SQLITE_PATH}
     ports:
@@ -34,7 +42,11 @@ services:
       dockerfile: git.Dockerfile
     container_name: mcp-git
     volumes:
-      - ${GIT_PATH}:/repo
+      - type: bind
+        source: ./data/allowed
+        target: /workspace
+        bind:
+          propagation: rprivate
     environment:
       - GIT_PATH=${GIT_PATH}
     ports:

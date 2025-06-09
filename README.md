@@ -19,6 +19,12 @@
 本專案使用 `.env` 管理敏感資料，並透過 Docker 容器實現隔離。目前採用 `npx` 本地啟動 MCP 伺服器模式，未來可擴展至 HTTP API 模式。
 
 ---
+## 🔐 2025-06 安全升級
+此版本引入「mcp-isolated」專用網路與最低權限執行基線：
+1. 服務僅能於內網互通，避免橫向移動。
+2. 以 UID/GID 1000 非 root 帳號、唯讀根 FS、最小 capabilities、Docker 預設 Seccomp/AppArmor 運行。
+3. 每台容器預設 CPU=1、RAM=512 MB，上線即符合 CIS-Docker Benchmark 1.5、1.6、2.x 規範。
+
 
 ## 📂 專案目錄結構
 

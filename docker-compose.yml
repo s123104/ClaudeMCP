@@ -1,5 +1,6 @@
 services:
   filesystem:
+    <<: *secure-run
     image: claude-mcp-fs
     build:
       context: .
@@ -14,6 +15,7 @@ services:
     restart: unless-stopped
 
   sqlite:
+    <<: *secure-run
     image: claude-mcp-sqlite
     build:
       context: .
@@ -28,6 +30,7 @@ services:
     restart: unless-stopped
 
   git:
+    <<: *secure-run
     image: claude-mcp-git
     build:
       context: .
@@ -42,6 +45,7 @@ services:
     restart: unless-stopped
 
   postgres:
+    <<: *secure-run
     image: claude-mcp-postgres
     build:
       context: .
@@ -56,6 +60,7 @@ services:
     restart: unless-stopped
 
   memory:
+    <<: *secure-run
     image: claude-mcp-memory
     build:
       context: .
@@ -66,6 +71,7 @@ services:
     restart: unless-stopped
 
   brave-search:
+    <<: *secure-run
     image: claude-mcp-brave-search
     build:
       context: .
@@ -78,6 +84,7 @@ services:
     restart: unless-stopped
 
   everything:
+    <<: *secure-run
     image: claude-mcp-everything
     build:
       context: .
@@ -88,6 +95,7 @@ services:
     restart: unless-stopped
 
   puppeteer:
+    <<: *secure-run
     image: claude-mcp-puppeteer
     build:
       context: .
@@ -98,6 +106,7 @@ services:
     restart: unless-stopped
 
   github:
+    <<: *secure-run
     image: claude-mcp-github
     build:
       context: .
@@ -110,6 +119,7 @@ services:
     restart: unless-stopped
 
   sequential-thinking:
+    <<: *secure-run
     image: claude-mcp-sequential-thinking
     build:
       context: .
@@ -120,6 +130,7 @@ services:
     restart: unless-stopped
 
   gitlab:
+    <<: *secure-run
     image: claude-mcp-gitlab
     build:
       context: .
@@ -133,6 +144,7 @@ services:
     restart: unless-stopped
 
   time:
+    <<: *secure-run
     image: claude-mcp-time
     build:
       context: .
@@ -141,3 +153,27 @@ services:
     ports:
       - "${TIME_PORT}:4000"
     restart: unless-stopped
+
+# === 🛡️ Global Networks & x-defaults =========================
+networks:
+  mcp-isolated:
+    driver: bridge
+    internal: true        # 只允許容器互通，不對外
+
+x-security: &secure-run
+  user: "1000:1000"               # 非 root
+  read_only: true                 # 根檔案系統唯讀
+  cap_drop: [ "ALL" ]
+  cap_add: [ "CHOWN", "DAC_OVERRIDE" ]
+  security_opt:
+    - no-new-privileges:true
+    - seccomp:default
+    - apparmor:docker-default
+  tmpfs:
+    - /tmp:rw,noexec,nosuid,size=64m
+  networks: [ "mcp-isolated" ]
+  deploy:
+    resources:
+      limits:
+        cpus: "1.0"
+        memory: "512M"
